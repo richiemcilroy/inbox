@@ -7,7 +7,7 @@ export default function Layout({
   return (
     <div className="flex h-full w-full">
       <SettingsSidebar />
-      <div className="flex h-full w-full flex-1 overflow-y-auto">
+      <div className="flex h-full w-full flex-1 justify-center overflow-y-auto">
         {children}
       </div>
     </div>
