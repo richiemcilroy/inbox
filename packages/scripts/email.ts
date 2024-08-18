@@ -96,7 +96,7 @@ const sendIndividualEmails = async (
       const response = await sendEmail(emailData);
 
       if (response.status === 'success') {
-        console.log(`Email ${i + 1} sent successfully:`, response.data);
+        console.info(`Email ${i + 1} sent successfully:`, response.data);
       } else {
         console.error(`Error sending email ${i + 1}:`, response.data);
       }
@@ -105,7 +105,7 @@ const sendIndividualEmails = async (
     }
 
     if (i < amount - 1) {
-      console.log(`Waiting ${interval} seconds before sending next email...`);
+      console.info(`Waiting ${interval} seconds before sending next email...`);
       await sleep(interval * 1000);
     }
   }
@@ -120,7 +120,6 @@ const sendReplyChain = async (
   let previousMessageId: string | undefined;
 
   for (let i = 0; i < amount; i++) {
-    const uniqueId = Date.now() + i;
     const subject =
       i === 0
         ? `Initial Email (Hash: ${testIdentifier})`
@@ -143,7 +142,7 @@ const sendReplyChain = async (
       const response = await sendEmail(emailData);
 
       if (response.status === 'success') {
-        console.log(`Email ${i + 1} sent successfully:`, response.data);
+        console.info(`Email ${i + 1} sent successfully:`, response.data);
         previousMessageId = response.data.message_id;
       } else {
         console.error(`Error sending email ${i + 1}:`, response.data);
@@ -153,7 +152,7 @@ const sendReplyChain = async (
     }
 
     if (i < amount - 1) {
-      console.log(`Waiting ${interval} seconds before sending next email...`);
+      console.info(`Waiting ${interval} seconds before sending next email...`);
       await sleep(interval * 1000);
     }
   }
@@ -194,18 +193,18 @@ const main = () => {
   }
 
   const testIdentifier = crypto.randomBytes(4).toString('hex');
-  console.log(`Starting email script with test id: ${testIdentifier}`);
+  console.info(`Starting email script with test id: ${testIdentifier}`);
 
   const sendFunction =
     mode === 'individual' ? sendIndividualEmails : sendReplyChain;
 
   sendFunction(email, amount, interval, testIdentifier)
     .then(() => {
-      console.log(`Finished sending emails. test id: ${testIdentifier}`);
+      console.info(`Finished sending emails. test id: ${testIdentifier}`);
     })
     .catch((error) => {
       console.error('An error occurred:', error);
-      console.log(
+      console.info(
         `Script terminated. Unique test identifier: ${testIdentifier}`
       );
     });
