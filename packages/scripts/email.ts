@@ -43,20 +43,6 @@ type PostalResponse =
 type EmailMode = 'individual' | 'reply-chain';
 
 async function sendEmail(emailData: EmailData): Promise<PostalResponse> {
-  //   if (env.MAILBRIDGE_LOCAL_MODE) {
-  //     console.info('Mailbridge local mode enabled, sending email to console')
-  //     console.info(JSON.stringify(emailData.plain_body, null, 2))
-  //     return {
-  //       status: 'success',
-  //       time: Date.now(),
-  //       flags: {},
-  //       data: {
-  //         message_id: 'console',
-  //         messages: {}
-  //       }
-  //     }
-  //   }
-
   const config = env.MAILBRIDGE_TRANSACTIONAL_CREDENTIALS;
   const sendMailPostalResponse = (await fetch(
     `${config.apiUrl}/api/v1/send/message`,
