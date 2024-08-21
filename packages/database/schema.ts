@@ -8,7 +8,7 @@ import {
   mysqlEnum,
   mysqlTable,
   primaryKey,
-  serial,
+  // serial,
   timestamp,
   index,
   json,
@@ -27,6 +27,14 @@ import {
 import { typeIdDataType as publicId } from '@u22n/utils/typeid';
 import { uiColors } from '@u22n/utils/colors';
 import { relations } from 'drizzle-orm';
+
+//! Remove when drizzle issue resolved: https://github.com/drizzle-team/drizzle-orm/issues/2180#issuecomment-2283461007
+function serial(name: string) {
+  return bigint(name, { mode: 'number', unsigned: true })
+    .notNull()
+    .unique()
+    .autoincrement();
+}
 
 // import { stripeBillingPeriods, stripePlanNames } from '../../ee/apps/billing';
 const stripeBillingPeriods = ['monthly', 'yearly'] as const;
